@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jeewan Gurung</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #17131d;
+      --text:   #ffffff;
+      --muted:  #64748b;
+      --subtle: rgba(255,255,255,0.72);
+      --dim:    rgba(255,255,255,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 13.5px;
+      font-weight: 400;
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    /* ── LAYOUT ── */
+    .layout {
+      display: flex;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 72px 48px;
+      gap: 80px;
+      align-items: flex-start;
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      width: 210px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 72px;
+    }
+
+    .sidebar-photo {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 20px;
+      display: block;
+      opacity: 0.95;
+    }
+
+    /* ── SCRAMBLE TARGETS ── */
+    .scramble {
+      display: inline-block;
+      cursor: default;
+    }
+    .scramble .s-char {
+      display: inline-block;
+    }
+
+    .sidebar-name {
+      font-size: 15px;
+      font-weight: 500;
+      letter-spacing: -0.01em;
+      margin-bottom: 10px;
+      color: #ffffff;
+    }
+
+    .sidebar-tagline {
+      font-size: 12.5px;
+      color: #ffffff;
+      line-height: 1.65;
+      margin-bottom: 36px;
+      opacity: 0.85;
+    }
+
+    .sidebar-group { margin-bottom: 20px; }
+
+    .sidebar-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-bottom: 7px;
+      opacity: 0.5;
+      display: inline-block;
+    }
+
+    .sidebar-links { display: flex; flex-direction: column; gap: 5px; }
+    .sidebar-links a {
+      font-size: 12.5px;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .sidebar-links a:hover { color: #ffffff; }
+
+    /* ── MAIN GRID ── */
+    .main {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 52px;
+      align-items: start;
+    }
+
+    /* ── COLUMN TITLES ── */
+    .col-title {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-bottom: 28px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--dim);
+    }
+
+    .col-title-secondary {
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #ffffff;
+      margin-top: 40px;
+      margin-bottom: 22px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--dim);
+    }
+
+    /* ── ITEM ── */
+    .item { margin-bottom: 30px; }
+    .item:last-child { margin-bottom: 0; }
+
+    .item-num {
+      font-size: 10.5px;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+
+    .item-title {
+      font-size: 13px;
+      font-weight: 500;
+      color: #ffffff;
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+
+    .item-desc {
+      font-size: 12px;
+      color: var(--subtle);
+      line-height: 1.6;
+      margin-bottom: 9px;
+    }
+
+    .item-meta {
+      font-size: 11px;
+      color: rgba(255,255,255,0.45);
+      margin-top: 4px;
+    }
+
+    .item-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin-bottom: 9px;
+    }
+
+    .item-tag {
+      font-size: 10px;
+      color: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 1px 7px;
+      border-radius: 3px;
+      letter-spacing: 0.02em;
+    }
+
+    .item-link {
+      font-size: 11.5px;
+      color: rgba(255,255,255,0.55);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+      padding-bottom: 1px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .item-link:hover { color: #ffffff; border-color: rgba(255,255,255,0.6); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 960px) {
+      .layout { flex-direction: column; padding: 48px 28px; gap: 48px; }
+      .sidebar { position: static; width: 100%; }
+      .main { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .layout { padding: 36px 20px; }
+      .main { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="layout">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+    <img src="profile_pic.png" alt="Jeewan Gurung" class="sidebar-photo" />
+
+    <div class="sidebar-name">
+      <span class="scramble" data-text="Jeewan Gurung">Jeewan Gurung</span>
+    </div>
+
+    <div class="sidebar-tagline">
+      <span class="scramble" data-text="Turning raw data into actionable insights through analysis, visualization, and problem solving.">Turning raw data into actionable insights through analysis, visualization, and problem solving.</span>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-label">
+        <span class="scramble" data-text="contact">contact</span>
+      </div>
+      <div class="sidebar-links">
+        <a href="mailto:jeewangurung35@gmail.com">jeewangurung35@gmail.com</a>
+        <a href="tel:07882551674">07882 551674</a>
+      </div>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-label">
+        <span class="scramble" data-text="on here">on here</span>
+      </div>
+      <div class="sidebar-links">
+        <a href="https://www.linkedin.com/in/jg936" target="_blank" rel="noopener">linkedin</a>
+      </div>
+    </div>
+
+    <div class="sidebar-group">
+      <div class="sidebar-label">
+        <span class="scramble" data-text="elsewhere">elsewhere</span>
+      </div>
+      <div class="sidebar-links">
+        <a href="https://github.com/Jeewan-JG" target="_blank" rel="noopener">github</a>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <main class="main">
+
+    <!-- COL 1 — PROJECTS -->
+    <div>
+      <div class="col-title">projects</div>
+
+      <div class="item">
+        <div class="item-num">01</div>
+        <div class="item-title">CRM Sales &amp; Revenue Performance Analysis</div>
+        <div class="item-desc">
+          Analysed CRM sales data to identify revenue trends, customer performance, and key business
+          drivers. Built dashboards and KPIs to track revenue growth and support financial decision-making.
+        </div>
+        <div class="item-tags">
+          <span class="item-tag">Excel</span>
+          <span class="item-tag">SQL</span>
+          <span class="item-tag">Tableau</span>
+        </div>
+        <a href="https://jeewan-jg.github.io/CRM-Insights-Sales-Revenue-Performance-Analysis/"
+           target="_blank" rel="noopener" class="item-link">view project ↗</a>
+      </div>
+
+      <div class="item">
+        <div class="item-num">02</div>
+        <div class="item-title">Cyclistic Bike Share Analysis</div>
+        <div class="item-desc">
+          Analysed large bike-share datasets to uncover behavioural differences between casual riders
+          and annual members. Built interactive Tableau dashboards to support membership growth strategies.
+        </div>
+        <div class="item-tags">
+          <span class="item-tag">SQL</span>
+          <span class="item-tag">R</span>
+          <span class="item-tag">Tableau</span>
+        </div>
+        <a href="https://jeewan-jg.github.io/casual-riders-to-members-analysis/"
+           target="_blank" rel="noopener" class="item-link">view project ↗</a>
+      </div>
+
+      <div class="item">
+        <div class="item-num">03</div>
+        <div class="item-title">NHS Waiting Times Analysis</div>
+        <div class="item-desc">
+          Developed an interactive Tableau dashboard analysing NHS waiting times, provider performance,
+          and 52+ week backlogs. Used Python for data cleaning, KPI creation, and trend analysis.
+        </div>
+        <div class="item-tags">
+          <span class="item-tag">Python</span>
+          <span class="item-tag">Tableau</span>
+        </div>
+        <a href="https://jeewan-jg.github.io/NHS_Waiting_Time_Analysis/"
+           target="_blank" rel="noopener" class="item-link">view project ↗</a>
+      </div>
+    </div>
+
+    <!-- COL 2 — BACKGROUND + SKILLS -->
+    <div>
+      <div class="col-title">background</div>
+
+      <div class="item">
+        <div class="item-num">01</div>
+        <div class="item-title">BSc (Hons) Information Technology</div>
+        <div class="item-desc">University of West London</div>
+        <div class="item-meta">2021 – 2024</div>
+      </div>
+
+      <div class="item">
+        <div class="item-num">02</div>
+        <div class="item-title">IT Support · Bingham Riverhouse</div>
+        <div class="item-desc">
+          First-line technical support for POS, booking, and HR systems. Managing user accounts,
+          troubleshooting issues, and maintaining incident documentation across internal platforms.
+        </div>
+        <div class="item-meta">April 2024 – Present · London</div>
+      </div>
+
+      <div class="col-title-secondary">skills</div>
+
+      <div class="item">
+        <div class="item-num">01</div>
+        <div class="item-title">data &amp; analysis</div>
+        <div class="item-desc">SQL · Excel · R · Python · Tableau · data cleaning &amp; preprocessing</div>
+      </div>
+
+      <div class="item">
+        <div class="item-num">02</div>
+        <div class="item-title">it &amp; systems</div>
+        <div class="item-desc">IT Support · Microsoft 365 · User Access Management · Ticketing Systems · POS &amp; Booking Systems</div>
+      </div>
+    </div>
+
+    <!-- COL 3 — CERTIFICATIONS -->
+    <div>
+      <div class="col-title">certifications</div>
+
+      <div class="item">
+        <div class="item-num">01</div>
+        <div class="item-title">Google Data Analytics Professional Certificate</div>
+        <div class="item-desc">
+          9-course programme by Google covering data preparation, analysis, visualisation,
+          R programming, and a capstone case study.
+        </div>
+        <div class="item-tags">
+          <span class="item-tag">Google</span>
+          <span class="item-tag">Coursera</span>
+          <span class="item-tag">Feb 2026</span>
+        </div>
+        <a href="https://coursera.org/verify/professional-cert/MVMJERLAE10E"
+           target="_blank" rel="noopener" class="item-link">verify on Coursera ↗</a>
+      </div>
+
+      <div class="item">
+        <div class="item-num">02</div>
+        <div class="item-title">Google Data Analytics Badge (v.3)</div>
+        <div class="item-desc">
+          Digital credential badge issued by Coursera via Credly, verifying completion of the
+          Google Data Analytics Professional Certificate programme.
+        </div>
+        <div class="item-tags">
+          <span class="item-tag">Credly</span>
+          <span class="item-tag">Feb 2026</span>
+        </div>
+        <a href="https://www.credly.com/go/jcQRjT5D"
+           target="_blank" rel="noopener" class="item-link">verify on Credly ↗</a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+  const CHARS = 'abcdefghijklmnopqrstuvwxyz0123456789';
+
+  function initScramble(el) {
+    const original = el.dataset.text;
+    let raf = null;
+
+    el.addEventListener('mouseenter', () => {
+      cancelAnimationFrame(raf);
+      let frame = 0;
+      const totalFrames = original.length * 2.5;
+
+      const tick = () => {
+        el.textContent = original.split('').map((char, i) => {
+          if (char === ' ') return ' ';
+          if (frame > i * 2.5) return char;
+          return CHARS[Math.floor(Math.random() * CHARS.length)];
+        }).join('');
+
+        frame++;
+        if (frame < totalFrames) {
+          raf = requestAnimationFrame(tick);
+        } else {
+          el.textContent = original;
+        }
+      };
+
+      raf = requestAnimationFrame(tick);
+    });
+
+    el.addEventListener('mouseleave', () => {
+      cancelAnimationFrame(raf);
+      el.textContent = original;
+    });
+  }
+
+  document.querySelectorAll('.scramble').forEach(initScramble);
+</script>
+</body>
+</html>
